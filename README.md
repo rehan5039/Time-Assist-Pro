@@ -42,7 +42,7 @@ A collection of powerful time management tools and relaxation aids to streamline
 
 ## Usage
 
-1. Clone the repository: `git clone https://github.com/your-username/Time-Assist-Pro.git`
+1. Clone the repository: `git clone https://github.com/rehan5039/Time-Assist-Pro.git`
 2. Open the desired tool's HTML file in your preferred web browser.
 
 ## Contributing
