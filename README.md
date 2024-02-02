@@ -70,3 +70,22 @@ This project is licensed under the [MIT License](/LICENSE).
 - **Custom Timer (`MyTimer.html`):** Personalized timer for your specific needs.
 - **Pomodoro Timer (`Pomodoro-Timer.html`):** Boost productivity using the Pomodoro technique.
 - **Soothing Relaxation (`Soothing-Relaxation.html`):** Unwind and relax with calming visuals and sounds.
+
+
+# Time Assist Pro
+
+Elevate your time management and well-being with Time Assist Pro – a sophisticated collection of tools designed to seamlessly integrate into your daily routine. From waking up to structured workout sessions, focused work intervals using the Pomodoro technique, to serene meditation breaks, Time Assist Pro caters to all facets of your time-related needs.
+
+## Features
+- **Alarm Clock:** Begin your day with a refreshing start using our soothing alarm clock.
+- **Breaths Counter:** Practice mindful breathing with a dedicated breaths counter.
+- **Cardio Timer:** Optimize your cardio workouts with precision timing.
+- **Meditation Timer:** Customize your meditation sessions for enhanced mindfulness.
+- **Custom Timer:** Tailor timers to fit your specific requirements.
+- **Pomodoro Timer:** Boost productivity through efficient work and break cycles.
+- **Soothing Relaxation:** Unwind and relax with visually calming scenes and sounds.
+
+Explore the diverse tools and take control of your time like never before. Welcome to a more organized and balanced lifestyle with Time Assist Pro!
+
+## Contributions Welcome
+Contribute to the project and be a part of refining time management for a broader audience. Follow the steps outlined in the [Contribution Guidelines](/CONTRIBUTING.md).
