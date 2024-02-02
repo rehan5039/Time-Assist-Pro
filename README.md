@@ -57,3 +57,16 @@ Contributions are welcome! Follow these steps to contribute:
 ## License
 
 This project is licensed under the [MIT License](/LICENSE).
+
+1. **Repository Name:** `Time-Assist-Pro`
+2. **Description:** A collection of time management tools and relaxation aids.
+
+**Contents:**
+- **Alarm Clock (`Alarm-Clock.html`):** A soothing alarm clock to start your day.
+- **Breaths Counter (`Breaths.html`):** Practice controlled breathing with this helpful tool.
+- **Cardio Timer (`Cardio-Timer.html`):** Time your cardio workouts effectively.
+- **Home (`index.html`):** Main page introducing the Time Assist Pro tools.
+- **Meditation Timer (`Meditation.html`):** Enhance your meditation sessions with this timer.
+- **Custom Timer (`MyTimer.html`):** Personalized timer for your specific needs.
+- **Pomodoro Timer (`Pomodoro-Timer.html`):** Boost productivity using the Pomodoro technique.
+- **Soothing Relaxation (`Soothing-Relaxation.html`):** Unwind and relax with calming visuals and sounds.
