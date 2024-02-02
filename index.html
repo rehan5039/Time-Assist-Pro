@@ -1,0 +1,1236 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TimeAssist Pro</title>
+    <style>
+        .gradient-wave {
+    background: linear-gradient(45deg, #3498db, #e74c3c, #1abc9c, #9b59b6);
+    background-size: 400% 400%;
+    animation: gradientWave 5s infinite alternate;
+}
+
+@keyframes gradientWave {
+    0% { background-position: 0% 50%; }
+    100% { background-position: 100% 50%; }
+}
+.gradient-wave {
+    background: linear-gradient(45deg, #3498db, #e74c3c, #1abc9c, #9b59b6);
+    background-size: 400% 400%;
+    animation: gradientWave 5s infinite alternate;
+}
+
+@keyframes gradientWave {
+    0% { background-position: 0% 50%; }
+    100% { background-position: 100% 50%; }
+}
+.expanding-circle {
+    width: 50px;
+    height: 50px;
+    background-color: #3498db;
+    border-radius: 50%;
+    transition: transform 0.3s ease-in-out;
+}
+
+.expanding-circle:active {
+    transform: scale(1.2);
+}
+.rotating-background {
+    background: linear-gradient(to right, #3498db, #e74c3c);
+    background-size: 200% 200%;
+    animation: rotateBackground 3s linear infinite;
+}
+
+@keyframes rotateBackground {
+    0% { background-position: 0% 50%; }
+    100% { background-position: 100% 50%; }
+}
+.dark-mode-toggle {
+    cursor: pointer;
+    position: relative;
+    z-index: 1;
+}
+
+.dark-mode-toggle::before {
+    content: '\1F319'; /* Moon emoji, you can change to any other suitable icon */
+    display: inline-block;
+    font-size: 20px;
+    margin-right: 5px;
+}
+
+.dark-mode-toggle:hover::before {
+    color: #3498db;
+}
+.slide-down-text {
+    overflow: hidden;
+}
+
+.slide-down-text span {
+    display: inline-block;
+    transform: translateY(100%);
+    transition: transform 0.5s ease-in-out;
+}
+
+.slide-down-text:hover span {
+    transform: translateY(0);
+}
+.spinning-loader {
+    border: 4px solid #3498db;
+    border-top: 4px solid transparent;
+    border-radius: 50%;
+    width: 30px;
+    height: 30px;
+    animation: spinLoader 1s linear infinite;
+}
+
+@keyframes spinLoader {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+}
+.text-shadow-pulse:hover {
+    text-shadow: 0 0 20px rgba(52, 152, 219, 0.8);
+}
+.tool {
+    transition: transform 0.3s ease-in-out, box-shadow 0.3s ease-in-out;
+}
+
+.tool:hover {
+    transform: scale(1.1);
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+}
+.flip-card-inner {
+    width: 200px;
+    height: 200px;
+    transform-style: preserve-3d;
+    transition: transform 0.5s;
+}
+
+.flip-card:hover .flip-card-inner {
+    transform: rotateY(180deg);
+}
+
+.gradient-text-hover {
+    background: linear-gradient(to right, #3498db, #e74c3c);
+    -webkit-background-clip: text;
+    color: transparent;
+    transition: background 0.3s ease-in-out;
+}
+
+.gradient-text-hover:hover {
+    background: linear-gradient(to right, #e74c3c, #3498db);
+}
+.tool p {
+    position: absolute;
+    bottom: 10px;
+    color: #333; /* Adjust text color as needed */
+    text-align: center;
+    padding: 10px;
+    border-radius: 15px;
+    width: 100%;
+    margin: 0;
+    opacity: 0;
+    transition: opacity 0.3s ease-in-out;
+}
+
+.tool:hover p {
+    opacity: 1;
+}
+.tool p {
+    position: absolute;
+    bottom: 10px;
+    color: #333; /* Adjust text color as needed */
+    text-align: center;
+    padding: 10px;
+    border-radius: 15px;
+    width: 100%;
+    margin: 0;
+    transform: translateY(30px);
+    opacity: 0;
+    transition: transform 0.3s ease-in-out, opacity 0.3s ease-in-out;
+}
+
+.tool:hover p {
+    transform: translateY(0);
+    opacity: 1;
+}
+.tool p {
+    position: absolute;
+    bottom: 10px;
+    color: #333; /* Adjust text color as needed */
+    text-align: center;
+    padding: 10px;
+    border-radius: 15px;
+    width: 100%;
+    margin: 0;
+    opacity: 0;
+    transform: translateY(20px);
+    transition: opacity 0.3s ease-in-out, transform 0.3s ease-in-out;
+}
+
+.tool:hover p {
+    opacity: 1;
+    transform: translateY(0);
+}
+.tool p {
+    position: absolute;
+    bottom: 10px;
+    color: #333; /* Adjust text color as needed */
+    text-align: center;
+    padding: 10px;
+    border-radius: 15px;
+    width: 100%;
+    margin: 0;
+    opacity: 0;
+    transform: translateY(10px);
+    transition: opacity 0.3s ease-in-out, transform 0.3s ease-in-out;
+}
+
+.tool:hover p {
+    opacity: 1;
+    transform: translateY(0);
+}
+.tool p {
+    position: absolute;
+    bottom: 10px;
+    color: #333; /* Adjust text color as needed */
+    text-align: center;
+    padding: 10px;
+    border-radius: 15px;
+    width: 100%;
+    margin: 0;
+    opacity: 0;
+    transform: scale(0.8);
+    transition: opacity 0.3s ease-in-out, transform 0.3s ease-in-out;
+}
+
+.tool:hover p {
+    opacity: 1;
+    transform: scale(1);
+}
+.tool p {
+    position: absolute;
+    bottom: 10px;
+    color: #333; /* Adjust text color as needed */
+    text-align: center;
+    padding: 10px;
+    border-radius: 15px;
+    width: 100%;
+    margin: 0;
+    opacity: 0;
+    transform: skewY(-10deg) translateY(20px);
+    transition: opacity 0.3s ease-in-out, transform 0.3s ease-in-out;
+}
+
+.tool:hover p {
+    opacity: 1;
+    transform: skewY(0) translateY(0);
+}
+.card {
+    transition: transform 0.3s ease-in-out, box-shadow 0.3s ease-in-out;
+}
+
+.card:hover {
+    transform: scale(1.05);
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+}
+.neumorphism-btn {
+    padding: 15px 30px;
+    background: #f0f0f0;
+    border: 1px solid #d6d6d6;
+    border-radius: 10px;
+    box-shadow: 5px 5px 10px #bcbcbc, -5px -5px 10px #ffffff;
+    transition: transform 0.3s ease-in-out;
+}
+
+.neumorphism-btn:hover {
+    transform: scale(1.05);
+}
+.animated-border {
+    position: relative;
+}
+
+.animated-border::after {
+    content: '';
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    top: 0;
+    left: 0;
+    border: 2px solid transparent;
+    border-image: linear-gradient(to right, #3498db, #e74c3c);
+    border-image-slice: 1;
+    transition: border 0.3s ease-in-out;
+}
+
+.animated-border:hover::after {
+    border-image-slice: 20;
+}
+.gradient-text-hover {
+    background: linear-gradient(to right, #3498db, #e74c3c);
+    -webkit-background-clip: text;
+    color: transparent;
+    transition: background 0.3s ease-in-out;
+}
+
+.gradient-text-hover:hover {
+    background: linear-gradient(to right, #e74c3c, #3498db);
+}
+.slide-in-overlay {
+    position: relative;
+}
+
+.slide-in-overlay::before {
+    content: '';
+    position: absolute;
+    width: 0;
+    height: 100%;
+    top: 0;
+    left: 0;
+    background-color: #3498db;
+    transition: width 0.3s ease-in-out;
+}
+
+.slide-in-overlay:hover::before {
+    width: 100%;
+}
+.custom-checkbox {
+    position: relative;
+    cursor: pointer;
+    padding-left: 30px;
+    display: inline-block;
+    line-height: 24px;
+}
+
+.custom-checkbox input {
+    opacity: 0;
+    position: absolute;
+}
+
+.custom-checkbox::before {
+    content: '';
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 20px;
+    height: 20px;
+    border: 2px solid #3498db;
+    background-color: #fff;
+    transition: background-color 0.3s ease-in-out;
+}
+
+.custom-checkbox:hover::before {
+    background-color: #f0f0f0;
+}
+
+.custom-checkbox input:checked +::before {
+    background-color: #3498db;
+}
+.gradient-wave {
+    background: linear-gradient(45deg, #3498db, #e74c3c, #1abc9c, #9b59b6);
+    background-size: 400% 400%;
+    animation: gradientWave 5s infinite alternate;
+}
+
+@keyframes gradientWave {
+    0% { background-position: 0% 50%; }
+    100% { background-position: 100% 50%; }
+}
+.floating-card {
+    transform: translateY(0);
+    animation: floatCard 3s ease-in-out infinite;
+}
+
+@keyframes floatCard {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(-10px); }
+}
+.animated-border-radius {
+    border-radius: 50%;
+    transition: border-radius 0.5s ease-in-out;
+}
+
+.animated-border-radius:hover {
+    border-radius: 0;
+}
+.rotating-background {
+    background: linear-gradient(to right, #3498db, #e74c3c);
+    background-size: 200% 200%;
+    animation: rotateBackground 3s linear infinite;
+}
+
+@keyframes rotateBackground {
+    0% { background-position: 0% 50%; }
+    100% { background-position: 100% 50%; }
+}
+
+       
+        
+        
+        .gradient-wave {
+    background: linear-gradient(45deg, #3498db, #e74c3c, #1abc9c, #9b59b6);
+    background-size: 400% 400%;
+    animation: gradientWave 5s infinite alternate;
+}
+
+@keyframes gradientWave {
+    0% { background-position: 0% 50%; }
+    100% { background-position: 100% 50%; }
+}
+.floating-card {
+    transform: translateY(0);
+    animation: floatCard 3s ease-in-out infinite;
+}
+
+@keyframes floatCard {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(-10px); }
+}
+.animated-border-radius {
+    border-radius: 50%;
+    transition: border-radius 0.5s ease-in-out;
+}
+
+.animated-border-radius:hover {
+    border-radius: 0;
+}
+.flip-card-inner {
+    width: 200px;
+    height: 200px;
+    transform-style: preserve-3d;
+    transition: transform 0.5s;
+}
+
+.flip-card:hover .flip-card-inner {
+    transform: rotateY(180deg);
+}
+.text-shadow-pulse {
+    text-shadow: 0 0 10px rgba(52, 152, 219, 0.8);
+    color: #3498db;
+    transition: text-shadow 0.5s ease-in-out;
+}
+
+.text-shadow-pulse:hover {
+    text-shadow: 0 0 20px rgba(52, 152, 219, 0.8);
+}
+.expanding-circle {
+    width: 50px;
+    height: 50px;
+    background-color: #3498db;
+    border-radius: 50%;
+    transition: transform 0.3s ease-in-out;
+}
+
+.expanding-circle:active {
+    transform: scale(1.2);
+}
+.rotating-background {
+    background: linear-gradient(to right, #3498db, #e74c3c);
+    background-size: 200% 200%;
+    animation: rotateBackground 3s linear infinite;
+}
+
+@keyframes rotateBackground {
+    0% { background-position: 0% 50%; }
+    100% { background-position: 100% 50%; }
+}
+.slide-down-text {
+    opacity: 0;
+    transform: translateY(-20px);
+    transition: opacity 0.3s ease-in-out, transform 0.3s ease-in-out;
+}
+
+.slide-down-text:hover {
+    opacity: 1;
+    transform: translateY(0);
+}
+.spinning-loader {
+    border: 4px solid #3498db;
+    border-top: 4px solid transparent;
+    border-radius: 50%;
+    width: 30px;
+    height: 30px;
+    animation: spinLoader 1s linear infinite;
+}
+
+@keyframes spinLoader {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+}
+.dark-mode-toggle {
+    cursor: pointer;
+}
+
+.dark-mode-toggle:hover {
+    filter: brightness(120%);
+}
+.dark-mode-toggle {
+    cursor: pointer;
+    position: relative;
+    z-index: 1;
+}
+
+.dark-mode-toggle::before {
+    content: '🌙'; /* You can use any other suitable icon or text for the button */
+    display: inline-block;
+    font-size: 20px;
+    margin-right: 5px;
+}
+
+.dark-mode-toggle:hover::before {
+    color: #3498db; /* Change to the color you desire */
+}
+.tool {
+    transition: transform 0.3s ease-in-out, box-shadow 0.3s ease-in-out;
+}
+
+.tool:hover {
+    transform: scale(1.05);
+    box-shadow: 0 5px 10px rgba(0, 0, 0, 0.2);
+}
+.neumorphism-btn {
+    padding: 15px 30px;
+    background: #f0f0f0;
+    border: 1px solid #d6d6d6;
+    border-radius: 10px;
+    box-shadow: 5px 5px 10px #bcbcbc, -5px -5px 10px #ffffff;
+    transition: transform 0.3s ease-in-out;
+}
+
+.neumorphism-btn:hover {
+    transform: scale(1.05);
+}
+.animated-border {
+    position: relative;
+}
+
+.animated-border::after {
+    content: '';
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    top: 0;
+    left: 0;
+    border: 2px solid transparent;
+    border-image: linear-gradient(to right, #3498db, #e74c3c);
+    border-image-slice: 1;
+    transition: border 0.3s ease-in-out;
+}
+
+.animated-border:hover::after {
+    border-image-slice: 20;
+}
+.gradient-text-hover {
+    background: linear-gradient(to right, #3498db, #e74c3c);
+    -webkit-background-clip: text;
+    color: transparent;
+    transition: background 0.3s ease-in-out;
+}
+
+.gradient-text-hover:hover {
+    background: linear-gradient(to right, #e74c3c, #3498db);
+}
+.slide-in-overlay {
+    position: relative;
+}
+
+.slide-in-overlay::before {
+    content: '';
+    position: absolute;
+    width: 0;
+    height: 100%;
+    top: 0;
+    left: 0;
+    background-color: #3498db;
+    transition: width 0.3s ease-in-out;
+}
+
+.slide-in-overlay:hover::before {
+    width: 100%;
+}
+.custom-checkbox {
+    position: relative;
+    cursor: pointer;
+    padding-left: 30px;
+    display: inline-block;
+    line-height: 24px;
+}
+
+.custom-checkbox input {
+    opacity: 0;
+    position: absolute;
+}
+
+.custom-checkbox::before {
+    content: '';
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 20px;
+    height: 20px;
+    border: 2px solid #3498db;
+    background-color: #fff;
+    transition: background-color 0.3s ease-in-out;
+}
+
+.custom-checkbox:hover::before {
+    background-color: #f0f0f0;
+}
+
+.custom-checkbox input:checked +::before {
+    background-color: #3498db;
+}
+        .tool {
+    width: 100%;
+    height: 300px;
+    position: relative;
+    border-radius: 15px;
+    overflow: hidden;
+}
+
+.tool img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    border-radius: 15px;
+    transition: transform 0.3s ease-in-out;
+}
+
+.tool:hover img {
+    transform: scale(1.1);
+}
+
+.tool p {
+    position: absolute;
+    bottom: 10px;
+    color: #fff;
+    text-align: center;
+    padding: 10px;
+    border-radius: 15px;
+    width: 100%;
+    margin: 0;
+    opacity: 0;
+    transition: opacity 0.3s ease-in-out;
+}
+
+.tool:hover p {
+    opacity: 1;
+}
+.tool p {
+    position: absolute;
+    bottom: 10px;
+    color: #000; /* Change to black color */
+    text-align: center;
+    padding: 10px;
+    border-radius: 15px;
+    width: 100%;
+    margin: 0;
+    opacity: 0;
+    transition: opacity 0.3s ease-in-out;
+}
+
+.tool:hover p {
+    opacity: 1;
+}
+    	.tool:hover {
+    background-color: #e0e0e0;
+    transform: scale(1.1);
+}
+.tool {
+    transition: background-color 0.3s, transform 0.3s;
+}
+.tool:hover {
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+}
+.tool p {
+    opacity: 0;
+    transition: opacity 0.3s;
+}
+
+.tool:hover p {
+    opacity: 1;
+}
+.tool img {
+    transition: transform 0.3s;
+}
+
+.tool:hover img {
+    transform: scale(1.2);
+}
+.tools {
+    background: linear-gradient(to right, #ffffff, #f2f2f2);
+}
+.tool {
+    transition: transform 0.5s;
+}
+
+.tool:hover {
+    transform: rotateY(180deg);
+}
+.tool {
+    border: 2px solid transparent;
+    transition: border 0.3s;
+}
+
+.tool:hover {
+    border-color: #333;
+}
+.tool p {
+    transform: translateY(30px);
+    transition: transform 0.3s;
+}
+
+.tool:hover p {
+    transform: translateY(0);
+}
+.tool {
+    transform-origin: center;
+    transition: transform 0.5s;
+}
+
+.tool:hover {
+    transform: rotate(10deg);
+}
+@keyframes pulse {
+    0% { transform: scale(1); }
+    50% { transform: scale(1.05); }
+    100% { transform: scale(1); }
+}
+
+.tool:hover {
+    animation: pulse 0.5s infinite;
+}
+@keyframes float {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(-10px); }
+}
+
+.tools {
+    animation: float 2s infinite;
+}
+@keyframes slideIn {
+    0% { transform: translateY(50px); opacity: 0; }
+    100% { transform: translateY(0); opacity: 1; }
+}
+
+.tool {
+    animation: slideIn 0.5s ease-out;
+}
+.tool:nth-child(odd) {
+    border-radius: 15px;
+}
+
+.tool:nth-child(even) {
+    border-radius: 25px;
+}
+.tool {
+    transition: box-shadow 0.3s ease-in-out;
+}
+
+.tool:hover {
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+}
+.tool {
+    transition: background-color 0.3s ease-in-out;
+}
+
+.tool:hover {
+    background-color: #c9e6e2;
+}
+.tool {
+    transition: transform 0.5s;
+}
+
+.tool:active {
+    transform: rotateY(180deg);
+}
+.tool {
+    transition: transform 0.3s;
+}
+
+.tool:hover {
+    transform: scale(1.1);
+}
+
+@keyframes shake {
+    0%, 100% { transform: translateX(0); }
+    25%, 75% { transform: translateX(-5px); }
+    50% { transform: translateX(5px); }
+}
+
+.tool:hover {
+    animation: shake 0.5s ease-in-out;
+}
+.tool {
+    box-sizing: border-box;
+    border: 2px solid transparent;
+    transition: border 0.3s ease-in-out;
+}
+
+.tool:hover {
+    border-color: #ffcc00;
+}
+.tool {
+    transition: transform 0.5s;
+}
+
+.tool:hover {
+    transform: perspective(500px) rotateX(5deg);
+}
+.tool img {
+    transition: filter 0.5s ease-in-out;
+}
+
+.tool:hover img {
+    filter: saturate(150%);
+}
+@keyframes pulseOnLoad {
+    0%, 100% { transform: scale(1); }
+    50% { transform: scale(1.05); }
+}
+
+.tool {
+    animation: pulseOnLoad 1s ease-in-out;
+}
+.btn {
+    display: inline-block;
+    padding: 10px 20px;
+    font-size: 16px;
+    color: #fff;
+    background-color: #3498db;
+    border-radius: 5px;
+    text-decoration: none;
+    transition: background-color 0.3s ease-in-out;
+}
+
+.btn:hover {
+    background-color: #2980b9;
+}
+.gradient-text {
+    background: linear-gradient(to right, #ff8a00, #e52e71);
+    -webkit-background-clip: text;
+    color: transparent;
+}
+.card {
+    width: 300px;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    transition: box-shadow 0.3s ease-in-out;
+}
+
+.card:hover {
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+}
+.subtle-hover {
+    transition: transform 0.3s ease-in-out;
+}
+
+.subtle-hover:hover {
+    transform: translateY(-5px);
+}
+.neumorphism-btn {
+    padding: 15px 30px;
+    background: #f0f0f0;
+    border: 1px solid #d6d6d6;
+    border-radius: 10px;
+    box-shadow: 5px 5px 10px #bcbcbc, -5px -5px 10px #ffffff;
+    transition: transform 0.3s ease-in-out;
+}
+
+.neumorphism-btn:hover {
+    transform: scale(1.05);
+}
+.animated-border {
+    position: relative;
+}
+
+.animated-border::after {
+    content: '';
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    top: 0;
+    left: 0;
+    border: 2px solid transparent;
+    border-image: linear-gradient(to right, #3498db, #e74c3c);
+    border-image-slice: 1;
+    transition: border 0.3s ease-in-out;
+}
+
+.animated-border:hover::after {
+    border-image-slice: 20;
+}
+.pulse-animation {
+    animation: pulse 1.5s infinite;
+}
+
+@keyframes pulse {
+    0%, 100% { transform: scale(1); }
+    50% { transform: scale(1.05); }
+}
+.dark-mode-toggle {
+    cursor: pointer;
+}
+
+.dark-mode-toggle:hover {
+    filter: brightness(120%);
+}
+.slide-in-overlay {
+    position: relative;
+}
+
+.slide-in-overlay::before {
+    content: '';
+    position: absolute;
+    width: 0;
+    height: 100%;
+    top: 0;
+    left: 0;
+    background-color: #3498db;
+    transition: width 0.3s ease-in-out;
+}
+
+.slide-in-overlay:hover::before {
+    width: 100%;
+}
+.custom-checkbox {
+    position: relative;
+    cursor: pointer;
+    padding-left: 30px;
+    display: inline-block;
+    line-height: 24px;
+}
+
+.custom-checkbox input {
+    opacity: 0;
+    position: absolute;
+}
+
+.custom-checkbox::before {
+    content: '';
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 20px;
+    height: 20px;
+    border: 2px solid #3498db;
+    background-color: #fff;
+    transition: background-color 0.3s ease-in-out;
+}
+
+.custom-checkbox:hover::before {
+    background-color: #f0f0f0;
+}
+
+.custom-checkbox input:checked +::before {
+    background-color: #3498db;
+}
+.gradient-wave {
+    background: linear-gradient(45deg, #3498db, #e74c3c, #1abc9c, #9b59b6);
+    background-size: 400% 400%;
+    animation: gradientWave 5s infinite alternate;
+}
+
+@keyframes gradientWave {
+    0% { background-position: 0% 50%; }
+    100% { background-position: 100% 50%; }
+}
+.floating-card {
+    transform: translateY(0);
+    animation: floatCard 3s ease-in-out infinite;
+}
+
+@keyframes floatCard {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(-10px); }
+}
+.animated-border-radius {
+    border-radius: 50%;
+    transition: border-radius 0.5s ease-in-out;
+}
+
+.animated-border-radius:hover {
+    border-radius: 0;
+}
+.flip-card {
+    perspective: 1000px;
+}
+
+.flip-card-inner {
+    width: 200px;
+    height: 200px;
+    transform-style: preserve-3d;
+    transition: transform 0.5s;
+}
+
+.flip-card:hover .flip-card-inner {
+    transform: rotateY(180deg);
+}
+.gradient-text-hover {
+    background: linear-gradient(to right, #3498db, #e74c3c);
+    -webkit-background-clip: text;
+    color: transparent;
+    transition: background 0.3s ease-in-out;
+}
+
+.gradient-text-hover:hover {
+    background: linear-gradient(to right, #e74c3c, #3498db);
+}
+.slide-down-text {
+    opacity: 0;
+    transform: translateY(-20px);
+    transition: opacity 0.3s ease-in-out, transform 0.3s ease-in-out;
+}
+
+.slide-down-text:hover {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+.slide-down-text {
+    opacity: 0;
+    transform: translateY(-20px);
+    transition: opacity 0.3s ease-in-out, transform 0.3s ease-in-out;
+}
+
+.slide-down-text:hover {
+    opacity: 1;
+    transform: translateY(0);
+}
+.spinning-loader {
+    border: 4px solid #3498db;
+    border-top: 4px solid transparent;
+    border-radius: 50%;
+    width: 30px;
+    height: 30px;
+    animation: spinLoader 1s linear infinite;
+}
+
+@keyframes spinLoader {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+}
+.text-shadow-pulse {
+    text-shadow: 0 0 10px rgba(52, 152, 219, 0.8);
+    color: #3498db;
+    transition: text-shadow 0.5s ease-in-out;
+}
+
+.text-shadow-pulse:hover {
+    text-shadow: 0 0 20px rgba(52, 152, 219, 0.8);
+}
+.expanding-circle {
+    width: 50px;
+    height: 50px;
+    background-color: #3498db;
+    border-radius: 50%;
+    transition: transform 0.3s ease-in-out;
+}
+
+.expanding-circle:active {
+    transform: scale(1.2);
+}
+.rotating-background {
+    background: linear-gradient(to right, #3498db, #e74c3c);
+    background-size: 200% 200%;
+    animation: rotateBackground 3s linear infinite;
+}
+
+@keyframes rotateBackground {
+    0% { background-position: 0% 50%; }
+    100% { background-position: 100% 50%; }
+}
+/* Welcome Text Styling */
+h1 {
+    text-align: center;
+    color: #3498db;
+    margin-bottom: 20px;
+    font-size: 2em;
+    animation: fadeInUp 1s ease-in-out;
+}
+
+/* Tool Container Styling */
+.container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 20px;
+}
+
+/* Tools Section Styling */
+.tools {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    margin-top: 30px;
+}
+
+/* Tool Styling */
+.tool {
+    width: 200px;
+    height: 250px;
+    background-color: #fff;
+    border-radius: 10px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    margin: 15px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    transition: transform 0.3s ease-in-out, box-shadow 0.3s ease-in-out;
+    animation: fadeIn 1s ease-in-out;
+}
+
+/* Tool Hover Animation */
+.tool:hover {
+    transform: scale(1.05);
+    box-shadow: 0 5px 10px rgba(0, 0, 0, 0.2);
+}
+
+/* Animations */
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(-20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+@keyframes fadeInUp {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f2f2f2;
+            margin: 0;
+            padding: 0;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        
+        h1 {
+            text-align: center;
+            color: #333;
+        }
+        
+        p {
+            text-align: center;
+            color: #666;
+        }
+        
+        .tools {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            margin-top: 50px;
+        }
+        
+        .tool {
+            width: 200px;
+            height: 250px; 
+            background-color: #fff;
+            border-radius: 10px;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+            margin: 10px;
+            display: flex;
+            flex-direction: column; 
+            align-items: center;
+            justify-content: center;
+        }
+        
+        .tool a {
+            text-decoration: none; 
+            color: inherit; 
+        }
+
+        .tool img {
+            max-width: 150px; 
+            max-height: 150px; 
+            margin-bottom: 10px; 
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Welcome to TimeAssist Pro</h1>
+        <p>Explore our wide range of tools</p>
+        <div class="tools">
+            <div class="tool">
+                <a href="Breaths.html">
+                    <img src="assets/img/Breaths.jpg" alt="Tool 1">
+                </a>
+                <p><a href="Breaths.html">Breaths</a></p>
+            </div>
+            <div class="tool">
+                <a href="Pomodoro Timer.html">
+                    <img src="assets/img/Pomodoro Timer.jpg" alt="Tool 2">
+                </a>
+                <p><a href="Pomodoro Timer.html">Pomodoro Timer</a></p>
+            </div>
+            <div class="tool">
+                <a href="Soothing Relaxation.html">
+                    <img src="assets/img/Soothing Relaxation.png" alt="Tool 3">
+                </a>
+                <p><a href="Soothing Relaxation.html">Soothing Relaxation</a></p>
+            </div>
+            <div class="tool">
+                <a href="MyTimer.html">
+                    <img src="assets/img/MyTimer.jpg" alt="Tool 4">
+                </a>
+                <p><a href="MyTimer.html">MyTimer</a></p>
+            </div>
+            <div class="tool">
+                <a href="Cardio Timer.html">
+                    <img src="assets/img/Cardio Timer.jpg" alt="Tool 5">
+                </a>
+                <p><a href="Cardio Timer.html">Cardio Timer</a></p>
+            </div>
+            <div class="tool">
+                <a href="Alarm Clock.html">
+                    <img src="assets/img/Alarm Clock.jpg" alt="Tool 6">
+                </a>
+                <p><a href="Alarm Clock.html">Alarm Clock</a></p>
+            </div>
+            
+            <div class="tool">
+                <a href="Meditation.html">
+                    <img src="assets/img/Meditation.jpg" alt="Tool 7">
+                </a>
+                <p><a href="Meditation.html">Meditation</a></p>
+            </div>
+            
+            
+        </div>
+    </div>
+</body>
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+        const links = document.querySelectorAll('a');
+        links.forEach(link => {
+            link.addEventListener('mouseover', function () {
+                const href = this.getAttribute('href');
+                if (href && href.startsWith('/') && !href.includes('#')) {
+                    const prefetchLink = document.createElement('link');
+                    prefetchLink.rel = 'prefetch';
+                    prefetchLink.href = href;
+                    document.head.appendChild(prefetchLink);
+                }
+            });
+        });
+    });
+</script>
+</html>

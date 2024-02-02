@@ -1,0 +1,225 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+  <head>
+    <meta charset="utf-8">
+    <title>Alarm Clock</title>
+    <style>
+      /* Import Google font - Poppins */
+      @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600&display=swap');
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+        font-family: 'Poppins', sans-serif;
+      }
+      body, .wrapper, .content {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+      }
+      body {
+        padding: 0 10px;
+        min-height: 100vh;
+        background: #4A98F7;
+      }
+      .wrapper {
+        width: 440px;
+        padding: 30px 30px 38px;
+        background: #fff;
+        border-radius: 10px;
+        flex-direction: column;
+        box-shadow: 0 10px 25px rgba(0,0,0,0.1);
+      }
+      .wrapper img {
+        max-width: 103px;
+      }
+      .wrapper h1 {
+        font-size: 38px;
+        font-weight: 500;
+        margin: 30px 0;
+      }
+      .wrapper .content {
+        width: 100%;
+        justify-content: space-between;
+      }
+      .content.disable {
+        cursor: no-drop;
+      }
+      .content .column {
+        padding: 0 10px;
+        border-radius: 5px;
+        border: 1px solid #bfbfbf;
+        width: calc(100% / 3 - 5px);
+      }
+      .content.disable .column {
+        opacity: 0.6;
+        pointer-events: none;
+      }
+      .column select {
+        width: 100%;
+        height: 53px;
+        border: none;
+        outline: none;
+        background: none;
+        font-size: 19px;
+      }
+      .wrapper button {
+        width: 100%;
+        border: none;
+        outline: none;
+        color: #fff;
+        cursor: pointer;
+        font-size: 20px;
+        padding: 17px 0;
+        margin-top: 20px;
+        border-radius: 5px;
+        background: #4A98F7;
+      }
+      /* Additional styles for displaying alarms */
+      .alarms {
+        margin-top: 30px;
+      }
+      .alarm-item {
+        margin-bottom: 10px;
+        padding: 10px;
+        background: #f2f2f2;
+        border-radius: 5px;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+      }
+      .alarm-item button {
+        background: #e74c3c;
+        color: #fff;
+        padding: 5px 10px;
+        border: none;
+        border-radius: 3px;
+        cursor: pointer;
+      }
+    </style>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  </head>
+  <body>
+    <div class="wrapper">
+      <img src="assets/img/clock.png" alt="clock">
+      <h1>00:00:00 PM</h1>
+      <div class="content">
+        <div class="column">
+          <select>
+            <option value="Hour" selected disabled hidden>Hour</option>
+          </select>
+        </div>
+        <div class="column">
+          <select>
+            <option value="Minute" selected disabled hidden>Minute</option>
+          </select>
+        </div>
+        <div class="column">
+          <select>
+            <option value="AM/PM" selected disabled hidden>AM/PM</option>
+          </select>
+        </div>
+      </div>
+      <button>Set Alarm</button>
+
+      <!-- Additional section for multiple alarms -->
+      <div class="alarms">
+        <h2>Alarms</h2>
+        <div id="alarmList"></div>
+      </div>
+    </div>
+
+    <script>
+      const currentTimeDisplay = document.querySelector("h1"),
+        content = document.querySelector(".content"),
+        selectMenu = document.querySelectorAll("select"),
+        setAlarmBtn = document.querySelector("button"),
+        alarmList = document.getElementById("alarmList");
+
+      let currentAlarmTime, isAlarmSet,
+        ringtone = new Audio("assets/audio/ringtone.mp3");
+
+      for (let i = 12; i > 0; i--) {
+        i = i < 10 ? `0${i}` : i;
+        let option = `<option value="${i}">${i}</option>`;
+        selectMenu[0].firstElementChild.insertAdjacentHTML("afterend", option);
+      }
+
+      for (let i = 59; i >= 0; i--) {
+        i = i < 10 ? `0${i}` : i;
+        let option = `<option value="${i}">${i}</option>`;
+        selectMenu[1].firstElementChild.insertAdjacentHTML("afterend", option);
+      }
+
+      for (let i = 2; i > 0; i--) {
+        let ampm = i == 1 ? "AM" : "PM";
+        let option = `<option value="${ampm}">${ampm}</option>`;
+        selectMenu[2].firstElementChild.insertAdjacentHTML("afterend", option);
+      }
+
+      setInterval(() => {
+        let date = new Date(),
+          h = date.getHours(),
+          m = date.getMinutes(),
+          s = date.getSeconds(),
+          ampm = "AM";
+        if (h >= 12) {
+          h = h - 12;
+          ampm = "PM";
+        }
+        h = h == 0 ? h = 12 : h;
+        h = h < 10 ? "0" + h : h;
+        m = m < 10 ? "0" + m : m;
+        s = s < 10 ? "0" + s : s;
+        currentTimeDisplay.innerText = `${h}:${m}:${s} ${ampm}`;
+
+        if (isAlarmSet && currentAlarmTime === `${h}:${m} ${ampm}`) {
+          ringtone.play();
+          ringtone.loop = true;
+        } else {
+          ringtone.pause();
+          ringtone.loop = false;
+        }
+      });
+
+      function setAlarm() {
+        if (isAlarmSet) {
+          currentAlarmTime = "";
+          ringtone.pause();
+          content.classList.remove("disable");
+          setAlarmBtn.innerText = "Set Alarm";
+          return isAlarmSet = false;
+        }
+
+        let time = `${selectMenu[0].value}:${selectMenu[1].value} ${selectMenu[2].value}`;
+        if (time.includes("Hour") || time.includes("Minute") || time.includes("AM/PM")) {
+          return alert("Please, select a valid time to set Alarm!");
+        }
+        currentAlarmTime = time;
+        isAlarmSet = true;
+        content.classList.add("disable");
+        setAlarmBtn.innerText = "Clear Alarm";
+
+        // Additional code for handling multiple alarms
+        displayAlarms();
+      }
+
+      function displayAlarms() {
+        alarmList.innerHTML = "";
+        alarms.forEach((alarm, index) => {
+          const alarmItem = document.createElement("div");
+          alarmItem.className = "alarm-item";
+          alarmItem.innerHTML = `<span>${alarm}</span><button onclick="removeAlarm(${index})">Remove</button>`;
+          alarmList.appendChild(alarmItem);
+        });
+      }
+
+      function removeAlarm(index) {
+        alarms.splice(index, 1);
+        displayAlarms();
+      }
+
+      setAlarmBtn.addEventListener("click", setAlarm);
+    </script>
+  </body>
+</html>

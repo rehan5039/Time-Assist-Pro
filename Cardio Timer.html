@@ -1,0 +1,240 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cardio Timer</title>
+
+    <style>
+body {
+    font-family: 'Arial', sans-serif;
+    margin: 0;
+    padding: 0;
+    background: linear-gradient(to right, #3498db, #2c3e50);
+    color: #fff;
+}
+
+header {
+    background-color: #333;
+    padding: 10px 0;
+    text-align: center;
+}
+
+header img {
+    max-width: 100%;
+    height: auto;
+    display: block;
+    margin: 0 auto;
+}
+
+h1 {
+    text-align: center;
+    margin: 20px 0;
+}
+
+#timer {
+    font-size: 2em;
+    margin: 20px 0;
+    color: #fff;
+    text-shadow: 2px 2px 5px rgba(0, 0, 0, 0.5);
+    text-align: center;
+    animation: fadeIn 1s ease-out;
+}
+
+#setup {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    margin-bottom: 20px;
+    animation: slideInUp 1s ease-out;
+}
+
+#setup label, #setup button {
+    margin: 0 10px;
+    color: #fff;
+}
+
+input {
+    padding: 10px;
+    font-size: 16px;
+}
+
+button {
+    padding: 10px 20px;
+    font-size: 16px;
+    cursor: pointer;
+    background-color: #2ecc71;
+    border: none;
+    color: #fff;
+    border-radius: 5px;
+    transition: background-color 0.3s;
+}
+
+button:disabled {
+    background-color: #7f8c8d;
+    cursor: not-allowed;
+}
+
+button:hover {
+    background-color: #27ae60;
+}
+
+#controls {
+    text-align: center;
+    animation: fadeIn 1s ease-out;
+}
+
+/* Top Navigation Bar Styles */
+nav {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    background-color: #333;
+    padding: 10px 0;
+    display: flex;
+    justify-content: center;
+    z-index: 1000;
+}
+
+nav a {
+    color: white;
+    text-decoration: none;
+    padding: 10px 20px;
+    margin: 0 10px;
+    border-radius: 5px;
+    transition: background-color 0.3s;
+}
+
+nav a:hover {
+    background-color: #555;
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+    }
+    to {
+        opacity: 1;
+    }
+}
+
+@keyframes slideInUp {
+    from {
+        transform: translateY(50px);
+        opacity: 0;
+    }
+    to {
+        transform: translateY(0);
+        opacity: 1;
+    }
+}
+
+    </style>
+</head>
+<body>
+
+<h1>Cardio Timer</h1>
+<div id="setup">
+    <label for="minutes">Minutes:</label>
+    <input type="number" id="minutes" min="0" step="1" value="0">
+
+    <label for="seconds">Seconds:</label>
+    <input type="number" id="seconds" min="0" step="1" value="30">
+
+
+</div>
+
+<div id="timer">00:00</div>
+
+<!-- Additional controls section -->
+<div id="controls">
+    <button id="start" onclick="startTimer()">Start</button>
+    <button id="stop" onclick="stopTimer()" disabled>Stop</button>
+    <button id="reset" onclick="resetTimer()" disabled>Reset</button>
+</div>
+
+<script>
+let timer;
+        let totalSeconds = 0;
+
+        function startTimer() {
+            const minutesInput = document.getElementById('minutes');
+            const secondsInput = document.getElementById('seconds');
+            const startButton = document.getElementById('start');
+            const stopButton = document.getElementById('stop');
+            const resetButton = document.getElementById('reset');
+
+            totalSeconds = parseInt(minutesInput.value) * 60 + parseInt(secondsInput.value);
+
+            if (isNaN(totalSeconds) || totalSeconds <= 0) {
+                alert('Please enter valid time values.');
+                return;
+            }
+
+            startButton.disabled = true;
+            stopButton.disabled = false;
+            resetButton.disabled = false;
+
+            timer = setInterval(function() {
+                const minutes = Math.floor(totalSeconds / 60);
+                const seconds = totalSeconds % 60;
+                document.getElementById('timer').innerText = `${formatTime(minutes)}:${formatTime(seconds)}`;
+
+                if (totalSeconds === 0) {
+                    clearInterval(timer);
+                    alert('Timer completed!');
+                    resetTimer();
+                } else {
+                    totalSeconds--;
+                }
+            }, 1000);
+        }
+
+        function stopTimer() {
+            const startButton = document.getElementById('start');
+            const stopButton = document.getElementById('stop');
+            const resetButton = document.getElementById('reset');
+
+            clearInterval(timer);
+            startButton.disabled = false;
+            stopButton.disabled = true;
+            resetButton.disabled = false;
+        }
+
+        function resetTimer() {
+            const startButton = document.getElementById('start');
+            const stopButton = document.getElementById('stop');
+            const resetButton = document.getElementById('reset');
+
+            clearInterval(timer);
+            totalSeconds = 0;
+            document.getElementById('timer').innerText = '00:00';
+            startButton.disabled = false;
+            stopButton.disabled = true;
+            resetButton.disabled = true;
+        }
+
+        function formatTime(value) {
+            return value < 10 ? `0${value
+
+}` : value;
+        }
+
+        function showPage(pageId) {
+            const policyPages = document.querySelectorAll('.policy-page');
+            policyPages.forEach(page => {
+                page.style.display = 'none';
+            });
+
+            const selectedPage = document.getElementById(pageId);
+            if (selectedPage) {
+                selectedPage.style.display = 'block';
+            }
+        }
+</script>
+
+</body>
+</html>

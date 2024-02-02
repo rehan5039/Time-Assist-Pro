@@ -1,0 +1,326 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>MyTimer</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.5.2/animate.css">
+    <style>
+    	 /* ... (existing style content) ... */
+        .btn-fixed-bottom {
+            position: fixed;
+            bottom: 0;
+            left: 50%;
+            transform: translateX(-50%);
+        }
+         /* Reset button styles */
+.timer-buttons .btn-reset {
+    background-color: #ecf0f1;
+    color: #2c3e50;
+    border: 2px solid #bdc3c7;
+    padding: 10px 20px;
+    font-size: 16px;
+    font-weight: bold;
+    text-align: center;
+    text-decoration: none;
+    cursor: pointer;
+    border-radius: 5px;
+    transition: background-color 0.3s ease-in-out, color 0.3s ease-in-out;
+}
+
+.timer-buttons .btn-reset:hover {
+    background-color: #d5d8dc;
+    color: #34495e;
+}
+
+/* Start button styles */
+.timer-buttons .btn-start {
+    background-color: #2ecc71;
+    color: #fff;
+    padding: 10px 20px;
+    font-size: 16px;
+    font-weight: bold;
+    text-align: center;
+    text-decoration: none;
+    cursor: pointer;
+    border: none;
+    border-radius: 5px;
+    transition: background-color 0.3s ease-in-out;
+}
+
+.timer-buttons .btn-start:hover {
+    background-color: #27ae60;
+}
+    
+    
+    .timer span {
+    display: inline-block;
+    transform-origin: center;
+    transition: transform 0.5s ease-in-out;
+}
+
+.timer:hover span {
+    transform: rotate(360deg);
+}
+    
+    .timer span:active {
+    transform: scale(1.2);
+    transition: transform 0.2s ease-in-out;
+}
+.jumbotron {
+    transform: translateY(0);
+    transition: transform 1s ease-in-out;
+}
+
+.jumbotron:hover {
+    transform: translateY(-10px);
+}
+.timer span {
+    transition: opacity 0.3s ease-in-out;
+}
+
+.timer:hover span {
+    opacity: 0.7;
+}
+.timer {
+    border-radius: 10px;
+    transition: border-radius 0.5s ease-in-out;
+}
+
+.timer:hover {
+    border-radius: 20px;
+}
+.timer-buttons button:hover {
+    transform: scale(1.1);
+    transition: transform 0.3s ease-in-out;
+}
+.timer-buttons button {
+    border-radius: 5px;
+}
+.timer-buttons button:hover {
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
+    transition: box-shadow 0.3s ease-in-out;
+}
+.timer-buttons button {
+    transition: border 0.3s ease-in-out;
+}
+
+.timer-buttons button:hover {
+    border: 2px solid #3498db; /* Change to your desired color */
+}
+/* Common button styles */
+.timer-buttons button {
+    display: inline-block;
+    padding: 10px 20px;
+    font-size: 16px;
+    font-weight: bold;
+    text-align: center;
+    text-decoration: none;
+    cursor: pointer;
+    transition: all 0.3s ease-in-out;
+    border: none;
+    border-radius: 5px;
+}
+/* Reset button styles */
+.timer-buttons .btn-reset {
+    background-color: #ecf0f1;
+    color: #2c3e50;
+    border: 2px solid #bdc3c7;
+}
+
+.timer-buttons .btn-reset:hover {
+    background-color: #d5d8dc;
+}
+
+/* Start button styles */
+.timer-buttons .btn-start {
+    background-color: #2ecc71;
+    color: #fff;
+}
+
+.timer-buttons .btn-start:hover {
+    background-color: #27ae60;
+}
+
+/* Primary button style */
+.timer-buttons .btn-primary {
+    background-color: #3498db;
+    color: #fff;
+}
+
+.timer-buttons .btn-primary:hover {
+    background-color: #2980b9;
+}
+
+/* Secondary button style */
+.timer-buttons .btn-secondary {
+    background-color: #2ecc71;
+    color: #fff;
+}
+
+.timer-buttons .btn-secondary:hover {
+    background-color: #27ae60;
+}
+
+/* Danger button style */
+.timer-buttons .btn-danger {
+    background-color: #e74c3c;
+    color: #fff;
+}
+
+.timer-buttons .btn-danger:hover {
+    background-color: #c0392b;
+}
+    
+    
+    
+    .timer-buttons button:hover {
+    transform: translateY(-5px);
+    transition: transform 0.3s ease-in-out;
+}
+    
+    	html, body {
+    height: 100%;
+    margin: 0;
+    padding: 0;
+    overflow: hidden;
+}
+
+.jumbotron {
+    height: 100vh;
+}
+
+        .timer {
+            font-size: 100px;
+           
+        }
+
+        .jumbotron {
+            margin-top: calc(15%);
+            -webkit-box-shadow: -2px 6px 67px -15px rgba(0,0,0,0.8);
+            -moz-box-shadow: -2px 6px 67px -15px rgba(0,0,0,0.8);
+            box-shadow: -2px 6px 67px -15px rgba(0,0,0,0.8);
+        }
+
+        body {
+            background-color: white;
+        }
+
+        span {
+            display: inline-block;
+        }
+
+        .input-group-addon{
+            border:  none;
+            background-color: transparent;
+            color: white;
+        }
+        .form-control {
+            background-color: transparent;
+            
+        }
+    </style>
+</head>
+<body>
+    <div class="jumbotron text-center">
+        <!-- timer -->
+        <div class="timer">
+            <span class="minutes animated">00</span> : <span class="seconds animated">00</span>
+        </div>
+        <div class="timer-buttons">
+            <button class="btn btn-lg btn-success" data-action="start">
+                Start
+            </button>
+            <button class="btn btn-lg btn-danger" data-action="stop">
+                Stop
+            </button>
+            <button class="btn btn-link btn-block" data-action="reset">
+                Reset
+            </button>
+        </div>
+    </div>
+    <audio class="audio" id="countdownAudio" src="assets/audio/Countdown.mp3"></audio>
+    <button class="btn btn-lg btn-primary btn-fixed-bottom" onclick="toggleMusic()">On Off Music</button>
+    <audio class="audio" id="countdownAudio" src="assets/audio/Countdown.mp3"></audio>
+    <script>
+        const startButton = document.querySelector('[data-action="start"]');
+        const stopButton = document.querySelector('[data-action="stop"]');
+        const resetButton = document.querySelector('[data-action="reset"]');
+        const minutes = document.querySelector('.minutes');
+        const seconds = document.querySelector('.seconds');
+        let audio = document.querySelector('.audio');
+        let timerTime = 0;
+        let interval;
+        let isRunning = false;
+
+        function startTimer() {
+            if (isRunning) return;
+
+            isRunning = true;
+            playMusic();
+            interval = setInterval(incrementTimer, 1000);
+        }
+
+        function stopTimer() {
+            isRunning = false;
+            stopMusic();
+            clearInterval(interval);
+        }
+
+        function resetTimer() {
+            stopTimer();
+            noAnimate();
+            timerTime = 0;
+            minutes.innerText = '00';
+            seconds.innerText = '00';
+        }
+
+        function animate() {
+            seconds.classList.add("infinite", "bounce");
+        }
+
+        function noAnimate() {
+            seconds.classList.remove("infinite", "bounce");
+        }
+
+        function incrementTimer() {
+            animate();
+            timerTime++;
+
+            const numOfMinutes = Math.floor(timerTime / 60);
+            const numOfSeconds = timerTime % 60;
+
+            minutes.innerText = pad(numOfMinutes);
+            seconds.innerText = pad(numOfSeconds);
+        }
+
+        function pad(number) {
+            return number < 10 ? '0' + number : number;
+        }
+
+        function playMusic() {
+            audio.currentTime = 0; // Reset audio to the beginning
+            audio.play();
+            audio.addEventListener('ended', playMusic); // Replays the music when it ends
+        }
+
+        function stopMusic() {
+            audio.pause();
+            audio.removeEventListener('ended', playMusic); // Remove the event listener
+        }
+
+        startButton.addEventListener('click', startTimer);
+        stopButton.addEventListener('click', stopTimer);
+        resetButton.addEventListener('click', resetTimer);
+        function toggleMusic() {
+            if (audio.paused) {
+                playMusic();
+            } else {
+                stopMusic();
+            }
+        }
+    </script>
+</body>
+</html>
