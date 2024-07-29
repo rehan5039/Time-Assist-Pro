@@ -4,24 +4,24 @@
 // @version         1.2.1
 // @description     Control page timer speed | Speed up to skip page timing ads | Video fast forward (slow play) | Skip ads | Support almost all web pages.
 // @description:en  it can hook the timer speed to change.
-// @match           *://*/*
-// @require         https://raw.githubusercontent.com/rehan5039/Time-Assist-Pro/main/TimerHooker/TimerHooker%20English%20Version.js
-// @author          TimerHooker
+// @include         *
+// @require         https://greasyfork.org/scripts/372672-everything-hook/code/Everything-Hook.js?version=881251
+// @author          Tiger 27
+// @match           http://*/*
 // @run-at          document-start
 // @grant           none
 // @license         GPL-3.0-or-later
-// @namespace       https://
-// @downloadURL     https://raw.githubusercontent.com/rehan5039/Time-Assist-Pro/main/TimerHooker/TimerHooker%20English%20Version.js
-// @updateURL       https://raw.githubusercontent.com/rehan5039/Time-Assist-Pro/main/TimerHooker/TimerHooker%20English%20Version.js
+// @namespace https://
+// @downloadURL https://update.greasyfork.org/scripts/438894/TimerHooker%20English%20Version.user.js
+// @updateURL https://update.greasyfork.org/scripts/438894/TimerHooker%20English%20Version.meta.js
 // ==/UserScript==
 /**
  * ---------------------------
- * Time: 2024/7/25 70:05.
- * Author: TimerHooker
- * View: https://t.me/Timerhooker
+ * Time: 2022/1/20 16:11.
+ * Author: Tiger 27
+ * View: http://
  * ---------------------------
  */
-
 
 /**
  * 1. hook Object.defineProperty | Object.defineProperties
