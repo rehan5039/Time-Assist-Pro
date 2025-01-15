@@ -369,6 +369,134 @@ body {
     margin-bottom: 2rem;
 }
 
+/* Enhanced Email Input Styling */
+.input-wrapper {
+    position: relative;
+    margin: 1.5rem 0;
+    border-radius: 12px;
+    transition: all 0.3s ease;
+    background: var(--glass-bg);
+    border: 2px solid var(--glass-border);
+    overflow: hidden;
+}
+
+.input-wrapper:focus-within {
+    border-color: var(--primary);
+    box-shadow: 0 0 15px rgba(var(--primary-rgb), 0.2);
+    transform: translateY(-2px);
+}
+
+.input-wrapper::before {
+    content: '';
+    position: absolute;
+    left: 0;
+    bottom: 0;
+    width: 100%;
+    height: 2px;
+    background: linear-gradient(90deg, var(--primary), var(--secondary), var(--accent));
+    transform: scaleX(0);
+    transition: transform 0.3s ease;
+}
+
+.input-wrapper:focus-within::before {
+    transform: scaleX(1);
+    animation: gradientMove 3s linear infinite;
+}
+
+#emailInput {
+    width: 100%;
+    padding: 1rem 3rem;
+    font-size: 1.1rem;
+    border: none;
+    background: transparent;
+    color: var(--text);
+    transition: all 0.3s ease;
+}
+
+#emailInput::placeholder {
+    color: var(--text-light);
+    transition: all 0.3s ease;
+}
+
+#emailInput:focus::placeholder {
+    opacity: 0.7;
+    transform: translateX(10px);
+}
+
+.input-icon {
+    position: absolute;
+    left: 1rem;
+    top: 50%;
+    transform: translateY(-50%);
+    color: var(--primary);
+    transition: all 0.3s ease;
+    animation: iconFloat 2s ease-in-out infinite;
+}
+
+.input-wrapper:focus-within .input-icon {
+    color: var(--accent);
+    transform: translateY(-50%) scale(1.1);
+}
+
+/* Animations */
+@keyframes gradientMove {
+    0% {
+        background-position: 0% 50%;
+    }
+    50% {
+        background-position: 100% 50%;
+    }
+    100% {
+        background-position: 0% 50%;
+    }
+}
+
+@keyframes iconFloat {
+    0%, 100% {
+        transform: translateY(-50%);
+    }
+    50% {
+        transform: translateY(-60%);
+    }
+}
+
+/* Add shine effect */
+.input-wrapper::after {
+    content: '';
+    position: absolute;
+    top: -50%;
+    left: -50%;
+    width: 200%;
+    height: 200%;
+    background: linear-gradient(
+        to right,
+        rgba(255, 255, 255, 0) 0%,
+        rgba(255, 255, 255, 0.3) 50%,
+        rgba(255, 255, 255, 0) 100%
+    );
+    transform: rotate(45deg);
+    transition: all 0.3s ease;
+    opacity: 0;
+}
+
+.input-wrapper:hover::after {
+    animation: shine 1.5s ease-in-out;
+}
+
+@keyframes shine {
+    0% {
+        opacity: 0;
+        transform: rotate(45deg) translateX(-100%);
+    }
+    50% {
+        opacity: 0.7;
+    }
+    100% {
+        opacity: 0;
+        transform: rotate(45deg) translateX(100%);
+    }
+}
+
 /* Input Section */
 .input-section {
     text-align: center;
