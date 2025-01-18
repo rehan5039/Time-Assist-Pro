@@ -109,6 +109,48 @@ const updateUIState = () => {
 // Initialize UI
 updateUIState();
 
+// Initialize checkbox states from localStorage or set defaults
+const initCheckbox = (checkbox, key) => {
+    const savedState = localStorage.getItem(key);
+    // Only Dot Variations should be checked by default
+    const defaultState = key === 'dotVariations' ? true : false;
+    checkbox.checked = savedState === null ? defaultState : savedState === 'true';
+};
+
+// Initialize all checkboxes
+initCheckbox(dotVariationsCheckbox, 'dotVariations');
+initCheckbox(prefixVariationsCheckbox, 'prefixVariations');
+initCheckbox(suffixVariationsCheckbox, 'suffixVariations');
+initCheckbox(yearVariationsCheckbox, 'yearVariations');
+
+// Initialize slider value
+const savedMaxVariations = localStorage.getItem('maxVariations');
+if (savedMaxVariations) {
+    maxVariationsSlider.value = savedMaxVariations;
+    maxVariationsValue.textContent = savedMaxVariations;
+} else {
+    maxVariationsSlider.value = '100';
+    maxVariationsValue.textContent = '100';
+    localStorage.setItem('maxVariations', '100');
+}
+
+// Add event listeners for variation checkboxes
+dotVariationsCheckbox.addEventListener('change', (e) => {
+    localStorage.setItem('dotVariations', e.target.checked);
+});
+
+prefixVariationsCheckbox.addEventListener('change', (e) => {
+    localStorage.setItem('prefixVariations', e.target.checked);
+});
+
+suffixVariationsCheckbox.addEventListener('change', (e) => {
+    localStorage.setItem('suffixVariations', e.target.checked);
+});
+
+yearVariationsCheckbox.addEventListener('change', (e) => {
+    localStorage.setItem('yearVariations', e.target.checked);
+});
+
 // Update max variations value display
 maxVariationsSlider.addEventListener('input', () => {
     maxVariationsValue.textContent = maxVariationsSlider.value;
@@ -154,66 +196,170 @@ function downloadAliases(aliases) {
     showToast('Aliases downloaded!');
 }
 
+// Common prefixes (from Android app)
+const commonPrefixes = [
+    'the', 'mr', 'ms', 'dr', 'real', 'official', 'its', 'im', 'original', 'contact',
+    'business', 'pro', 'premium', 'vip', 'main', 'my', 'our', 'your', 'their', 'his',
+    'her', 'its', 'cool', 'best', 'top', 'prime', 'elite', 'super', 'ultra', 'mega',
+    'max', 'mini', 'global', 'local', 'world', 'web', 'net', 'cyber', 'digital', 'smart',
+    'tech', 'first', 'last', 'next', 'new', 'old', 'young', 'fresh', 'true', 'pure',
+    'just', 'only', 'all', 'every'
+];
+
+// Common suffixes (from Android app)
+const commonSuffixes = [
+    'official', 'real', 'original', 'main', 'primary', 'backup', 'alt', 'alternative',
+    'business', 'work', 'personal', 'private', 'public', 'contact', 'support', 'help',
+    'info', 'admin', 'office', 'sales', 'marketing', 'dev', 'test', 'demo', 'temp',
+    'pro', 'plus', 'premium', 'vip', 'basic', 'free', 'paid', 'secure', 'verified',
+    'team', 'group', 'staff', 'member', 'user', 'client', 'customer', 'guest',
+    'web', 'online', 'digital', 'tech', 'net', 'cyber', 'cloud', 'mobile', 'app',
+    'service', 'system', 'network', 'global', 'local', 'world', 'zone', 'area', 'region'
+];
+
 // Generate dot variations
 function generateDotVariations(localPart) {
+    const variations = new Set([localPart]);
+    const chars = localPart.split('');
+    
+    // Function to generate combinations of positions for dots
+    function generateCombinations(arr, r) {
+        const combinations = [];
+        const data = new Array(r);
+        
+        function backtrack(start, index) {
+            if (index === r) {
+                combinations.push([...data]);
+                return;
+            }
+            
+            for (let i = start; i < arr.length; i++) {
+                data[index] = arr[i];
+                backtrack(i + 1, index + 1);
+            }
+        }
+        
+        backtrack(0, 0);
+        return combinations;
+    }
+    
+    // Generate positions where dots can be inserted
     const positions = [];
-    for (let i = 1; i < localPart.length; i++) {
+    for (let i = 1; i < chars.length; i++) {
         positions.push(i);
     }
     
-    const variations = new Set([localPart]);
-    const maxDots = positions.length;
-    
-    for (let i = 1; i <= maxDots; i++) {
-        const combos = getCombinations(positions, i);
-        for (const combo of combos) {
-            let variation = localPart;
-            let offset = 0;
-            for (const pos of combo) {
-                variation = variation.slice(0, pos + offset) + '.' + variation.slice(pos + offset);
-                offset++;
-            }
-            variations.add(variation);
-        }
+    // Generate all possible combinations of dot positions
+    for (let numDots = 1; numDots < chars.length; numDots++) {
+        const dotCombinations = generateCombinations(positions, numDots);
+        
+        dotCombinations.forEach(combination => {
+            const newVariation = [...chars];
+            combination.forEach((pos, index) => {
+                newVariation.splice(pos + index, 0, '.');
+            });
+            variations.add(newVariation.join(''));
+        });
     }
+
+    // Add variations with dots between each character
+    variations.add(chars.join('.'));
     
-    return Array.from(variations);
+    // Generate variations with multiple consecutive dots
+    for (let i = 1; i < chars.length; i++) {
+        const withDoubleDot = [...chars];
+        withDoubleDot.splice(i, 0, '..');
+        variations.add(withDoubleDot.join(''));
+        
+        const withTripleDot = [...chars];
+        withTripleDot.splice(i, 0, '...');
+        variations.add(withTripleDot.join(''));
+    }
+
+    return [...variations];
 }
 
-// Generate prefix variations
-function generatePrefixVariations(localPart) {
-    const prefixes = [
-        'info', 'contact', 'admin', 'support', 'noreply',
-        'hello', 'help', 'sales', 'billing', 'marketing', 'team',
-        'service', 'account', 'newsletter', 'notifications', 'alerts',
-        'feedback', 'enquiry', 'inquiry', 'jobs', 'careers', 'hr',
-        'dev', 'developer', 'tech', 'test', 'testing', 'qa',
-        'security', 'privacy', 'legal', 'media', 'press', 'news'
-    ];
-    
+// Generate plus variations
+function generatePlusVariations(localPart) {
     const variations = new Set();
-    prefixes.forEach(prefix => {
-        variations.add(`${prefix}.${localPart}`);
+    const commonLabels = [
+        'alias', 'filter', 'newsletter', 'social', 'shopping',
+        'work', 'personal', 'business', 'spam', 'important',
+        'bills', 'receipts', 'subscriptions', 'notifications',
+        'backup', 'main', 'alt', 'temp', 'test', 'info',
+        'contact', 'support', 'admin', 'sales', 'marketing',
+        'dev', 'help', 'noreply', 'account', 'service'
+    ];
+
+    commonLabels.forEach(label => {
+        variations.add(`${localPart}+${label}`);
+        // Add number variations
+        variations.add(`${localPart}+${label}1`);
+        variations.add(`${localPart}+${label}2`);
+        variations.add(`${localPart}+${label}01`);
     });
-    
-    return Array.from(variations);
+
+    return [...variations];
+}
+
+// Generate email aliases
+function generateAliases(email) {
+    const [localPart, domain] = email.split('@');
+    let aliases = new Set();
+
+    // Add original email
+    aliases.add(email);
+
+    // Generate dot variations
+    if (dotVariationsCheckbox.checked) {
+        const dotVariations = generateDotVariations(localPart);
+        dotVariations.forEach(variation => {
+            aliases.add(`${variation}@${domain}`);
+            
+            // Combine dot variations with plus variations
+            if (prefixVariationsCheckbox.checked) {
+                const plusVariations = generatePlusVariations(variation);
+                plusVariations.forEach(plusVariation => {
+                    aliases.add(`${plusVariation}@${domain}`);
+                });
+            }
+        });
+    }
+
+    // Generate plus variations for original email
+    if (prefixVariationsCheckbox.checked) {
+        const plusVariations = generatePlusVariations(localPart);
+        plusVariations.forEach(variation => {
+            aliases.add(`${variation}@${domain}`);
+        });
+    }
+
+    // Remove any invalid variations and duplicates
+    aliases = new Set([...aliases].filter(alias => {
+        const [local] = alias.split('@');
+        // Only allow variations with dots and plus signs
+        return local.split('').every(char => 
+            char === '.' || 
+            char === '+' || 
+            char.match(/[a-zA-Z0-9]/) ||
+            local.startsWith(localPart.split('+')[0].replace(/\./g, ''))
+        );
+    }));
+
+    // Convert to array and limit by maxVariations
+    let aliasArray = [...aliases];
+    const maxVariations = parseInt(maxVariationsSlider.value);
+    return aliasArray.slice(0, maxVariations);
 }
 
 // Generate suffix variations
 function generateSuffixVariations(localPart) {
-    const suffixes = [
-        'work', 'personal', 'social', 'shopping', 'spam',
-        'business', 'private', 'public', 'family', 'friends',
-        'gaming', 'education', 'school', 'college', 'uni',
-        'finance', 'bank', 'bills', 'subscriptions', 'newsletters',
-        'travel', 'booking', 'hotel', 'flight', 'vacation',
-        'temp', 'temporary', 'old', 'new', 'archive',
-        'primary', 'secondary', 'backup', 'recovery', 'secure'
-    ];
-    
     const variations = new Set();
-    suffixes.forEach(suffix => {
+    
+    commonSuffixes.forEach(suffix => {
         variations.add(`${localPart}.${suffix}`);
+        variations.add(`${localPart}_${suffix}`);
+        variations.add(`${localPart}${suffix}`);
     });
     
     return Array.from(variations);
@@ -221,134 +367,56 @@ function generateSuffixVariations(localPart) {
 
 // Generate year variations
 function generateYearVariations(localPart) {
+    const variations = new Set();
     const currentYear = new Date().getFullYear();
     const years = [];
     
-    for (let year = 2020; year <= currentYear + 2; year++) {
+    // Add last 5 years and next 2 years
+    for (let year = currentYear - 5; year <= currentYear + 2; year++) {
         years.push(year);
-        years.push(year % 100);
+        years.push(year.toString().slice(-2)); // Add 2-digit year
     }
     
-    const variations = new Set();
     years.forEach(year => {
         variations.add(`${localPart}${year}`);
         variations.add(`${localPart}.${year}`);
-        variations.add(`${localPart}+${year}`);
+        variations.add(`${localPart}_${year}`);
     });
     
     return Array.from(variations);
 }
 
-// Get combinations helper function
-function getCombinations(arr, k) {
-    const combinations = [];
-    
-    function backtrack(start, combo) {
-        if (combo.length === k) {
-            combinations.push([...combo]);
-            return;
-        }
-        
-        for (let i = start; i < arr.length; i++) {
-            combo.push(arr[i]);
-            backtrack(i + 1, combo);
-            combo.pop();
-        }
-    }
-    
-    backtrack(0, []);
-    return combinations;
-}
-
-// Create email item element
-function createEmailItem(email) {
-    const emailCard = document.createElement('div');
-    emailCard.className = 'email-card';
-
-    const emailContent = document.createElement('div');
-    emailContent.className = 'email-content';
-
-    const emailText = document.createElement('span');
-    emailText.className = 'email-text';
-    emailText.textContent = email;
-
-    const copyButton = document.createElement('button');
-    copyButton.className = 'copy-button';
-    copyButton.title = 'Copy to clipboard';
-    copyButton.innerHTML = '<span class="material-icons-round">content_copy</span>';
-    
-    copyButton.addEventListener('click', () => {
-        navigator.clipboard.writeText(email).then(() => {
-            showToast('Email copied to clipboard!');
-        }).catch(() => {
-            showToast('Failed to copy email');
-        });
-    });
-
-    emailContent.appendChild(emailText);
-    emailContent.appendChild(copyButton);
-    emailCard.appendChild(emailContent);
-
-    return emailCard;
-}
-
-// Generate email aliases
-function generateAliases(email) {
-    const [localPart, domain] = email.split('@');
-    let allVariations = [];
-    
-    if (dotVariationsCheckbox.checked) {
-        const dotVariations = generateDotVariations(localPart);
-        allVariations.push(...dotVariations.map(v => `${v}@${domain}`));
-    }
-    
-    if (prefixVariationsCheckbox.checked) {
-        const prefixVariations = generatePrefixVariations(localPart);
-        allVariations.push(...prefixVariations.map(v => `${v}@${domain}`));
-    }
-    
-    if (suffixVariationsCheckbox.checked) {
-        const suffixVariations = generateSuffixVariations(localPart);
-        allVariations.push(...suffixVariations.map(v => `${v}@${domain}`));
-    }
-    
-    if (yearVariationsCheckbox.checked) {
-        const yearVariations = generateYearVariations(localPart);
-        allVariations.push(...yearVariations.map(v => `${v}@${domain}`));
-    }
-    
-    allVariations = [email, ...new Set(allVariations)];
-    
-    const maxVariations = parseInt(maxVariationsSlider.value);
-    if (allVariations.length <= maxVariations) {
-        return allVariations;
-    }
-    
-    const result = [email];
-    const remainingVariations = allVariations.filter(v => v !== email);
-    
-    while (result.length < maxVariations && remainingVariations.length > 0) {
-        const randomIndex = Math.floor(Math.random() * remainingVariations.length);
-        result.push(remainingVariations.splice(randomIndex, 1)[0]);
-    }
-    
-    return result;
-}
-
 // Update statistics
 function updateStats(aliases) {
-    const email = emailInput.value;
-    const [localPart] = email.split('@');
-    
-    const dotCount = aliases.filter(alias => alias.includes('.')).length;
-    const prefixCount = aliases.filter(alias => alias.includes('+')).length;
-    const suffixCount = aliases.filter(alias => 
-        alias.includes('+') && alias.indexOf(localPart) === 0
-    ).length;
-    
+    const baseEmail = emailInput.value.trim().split('@')[0];
+    const dotCount = aliases.filter(email => {
+        const localPart = email.split('@')[0];
+        return localPart.includes('.') && !localPart.includes('_') && 
+               !commonPrefixes.some(p => localPart.startsWith(p)) &&
+               !commonSuffixes.some(s => localPart.endsWith(s));
+    }).length;
+
+    const prefixCount = aliases.filter(email => {
+        const localPart = email.split('@')[0];
+        return commonPrefixes.some(prefix => 
+            localPart.startsWith(prefix + '.') || 
+            localPart.startsWith(prefix + '_') || 
+            localPart.startsWith(prefix)
+        );
+    }).length;
+
+    const suffixCount = aliases.filter(email => {
+        const localPart = email.split('@')[0];
+        return commonSuffixes.some(suffix => 
+            localPart.endsWith('.' + suffix) || 
+            localPart.endsWith('_' + suffix) || 
+            localPart.endsWith(suffix)
+        );
+    }).length;
+
     totalAliasesElement.textContent = aliases.length;
     dotCountElement.textContent = dotCount;
-    prefixCountElement.textContent = prefixCount - suffixCount;
+    prefixCountElement.textContent = prefixCount;
     suffixCountElement.textContent = suffixCount;
 }
 
@@ -471,3 +539,35 @@ document.querySelectorAll('.scheme-option').forEach(button => {
         showToast(`Color scheme changed to ${scheme}`);
     });
 });
+
+// Create email item element
+function createEmailItem(email) {
+    const emailCard = document.createElement('div');
+    emailCard.className = 'email-card';
+
+    const emailContent = document.createElement('div');
+    emailContent.className = 'email-content';
+
+    const emailText = document.createElement('span');
+    emailText.className = 'email-text';
+    emailText.textContent = email;
+
+    const copyButton = document.createElement('button');
+    copyButton.className = 'copy-button';
+    copyButton.title = 'Copy to clipboard';
+    copyButton.innerHTML = '<span class="material-icons-round">content_copy</span>';
+    
+    copyButton.addEventListener('click', () => {
+        navigator.clipboard.writeText(email).then(() => {
+            showToast('Email copied to clipboard!');
+        }).catch(() => {
+            showToast('Failed to copy email');
+        });
+    });
+
+    emailContent.appendChild(emailText);
+    emailContent.appendChild(copyButton);
+    emailCard.appendChild(emailContent);
+
+    return emailCard;
+}
