@@ -559,7 +559,20 @@ function createEmailItem(email) {
     
     copyButton.addEventListener('click', () => {
         navigator.clipboard.writeText(email).then(() => {
-            showToast('Email copied to clipboard!');
+            // Add success class for animation
+            copyButton.classList.add('success');
+            
+            // Change icon to check
+            copyButton.innerHTML = '<span class="material-icons-round">check</span>';
+            
+            // Show toast
+            showToast('Copied!');
+            
+            // Reset button after animation
+            setTimeout(() => {
+                copyButton.classList.remove('success');
+                copyButton.innerHTML = '<span class="material-icons-round">content_copy</span>';
+            }, 1000);
         }).catch(() => {
             showToast('Failed to copy email');
         });
@@ -571,3 +584,126 @@ function createEmailItem(email) {
 
     return emailCard;
 }
+
+// Disable right click
+document.addEventListener('contextmenu', function(e) {
+    e.preventDefault();
+    return false;
+});
+
+// Disable text selection
+document.addEventListener('selectstart', function(e) {
+    e.preventDefault();
+    return false;
+});
+
+// Disable keyboard shortcuts
+document.addEventListener('keydown', function(e) {
+    // Prevent Ctrl+S
+    if (e.ctrlKey && e.keyCode == 83) {
+        e.preventDefault();
+        return false;
+    }
+    // Prevent Ctrl+U (view source)
+    if (e.ctrlKey && e.keyCode == 85) {
+        e.preventDefault();
+        return false;
+    }
+    // Prevent Ctrl+Shift+I or F12 (developer tools)
+    if ((e.ctrlKey && e.shiftKey && e.keyCode == 73) || e.keyCode == 123) {
+        e.preventDefault();
+        return false;
+    }
+});
+
+// Disable drag and drop
+document.addEventListener('dragstart', function(e) {
+    e.preventDefault();
+    return false;
+});
+
+// Add custom message when trying to copy
+document.addEventListener('copy', function(e) {
+    e.preventDefault();
+    return false;
+});
+
+// Disable print
+document.addEventListener('keydown', function(e) {
+    if (e.ctrlKey && e.keyCode == 80) {
+        e.preventDefault();
+        return false;
+    }
+});
+
+// Developer Tools Detection and Prevention
+function detectDevTools() {
+    // First method: Check window size
+    const threshold = 160;
+    const widthThreshold = window.outerWidth - window.innerWidth > threshold;
+    const heightThreshold = window.outerHeight - window.innerHeight > threshold;
+    
+    if (widthThreshold || heightThreshold) {
+        handleDevToolsOpen();
+    }
+}
+
+// Second method: Debug check
+let element = new Image();
+Object.defineProperty(element, 'id', {
+    get: function() {
+        handleDevToolsOpen();
+    }
+});
+console.debug(element);
+
+// Third method: Regular check using console
+setInterval(function() {
+    const dateStart = new Date();
+    debugger;
+    const dateEnd = new Date();
+    if (dateEnd - dateStart > 100) {
+        handleDevToolsOpen();
+    }
+}, 1000);
+
+// Fourth method: DevTools status check
+function checkDevTools() {
+    if (window.Firebug && window.Firebug.chrome && window.Firebug.chrome.isInitialized || window.outerWidth - window.innerWidth > threshold || window.outerHeight - window.innerHeight > threshold || window.devtools?.open || /Chrome/.test(window.chrome?.runtime?.id)) {
+        handleDevToolsOpen();
+    }
+}
+
+// Handle when DevTools is detected
+function handleDevToolsOpen() {
+    // Option 1: Close the window
+    window.close();
+    
+    // Option 2: Redirect to homepage or another page
+    window.location.href = "/";
+    
+    // Option 3: Clear the page content
+    document.body.innerHTML = '';
+}
+
+// Add multiple listeners
+window.addEventListener('resize', detectDevTools);
+window.addEventListener('devtoolschange', checkDevTools);
+setInterval(checkDevTools, 1000);
+
+// Additional protection against console opens
+(function() {
+    try {
+        var $_console$$ = console;
+        Object.defineProperty(window, "console", {
+            get: function() {
+                if(!$_console$$) return {};
+                handleDevToolsOpen();
+                return $_console$$;
+            },
+            set: function(val) {
+                $_console$$ = val;
+            }
+        });
+    } catch(err) {}
+})();
